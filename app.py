@@ -15,7 +15,7 @@ with open("CP_lgb_best_model.pkl", "rb") as f:
     model_cp = pickle.load(f)
 
 # Imagen del mapa
-map_image = Image.open("CornisaCantabrica3.jpg")
+map_image = Image.open("AsturiasGalicia2.jpg")
 
 st.set_page_config(layout="wide")
 
