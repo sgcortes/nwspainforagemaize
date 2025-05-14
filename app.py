@@ -59,7 +59,7 @@ with col1:
         st.session_state["pred_cp"] = round(pred_cp, 2)
 
 with col2:
-    st.image(map_image, caption="Study area: Galicia, Asturias, and Cantabria", use_column_width=True)
+    st.image(map_image, caption="Study area: Galicia, Asturias, and Cantabria", use_container_width=True)
 
     if "pred_dm" in st.session_state:
         col_dm, col_ufl, col_cp = st.columns(3)
