@@ -19,6 +19,8 @@ map_image = Image.open("CornisaCantabrica3.jpg")
 
 st.set_page_config(layout="wide")
 
+st.title("Forage Maize Prediction in SW of Spain")
+
 # Layout con dos columnas
 col1, col2 = st.columns([1, 2])
 
@@ -66,4 +68,5 @@ with col2:
         col_dm.markdown(f"### Dry Matter: {st.session_state['pred_dm']} kgDM/ha")
         col_ufl.markdown(f"### UFL/ha: {st.session_state['pred_ufl']}")
         col_cp.markdown(f"### Crude Protein: {st.session_state['pred_cp']}")
+
 
