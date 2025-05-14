@@ -19,7 +19,7 @@ map_image = Image.open("AsturiasGalicia2.jpg")
 
 st.set_page_config(layout="wide")
 
-st.title("Forage Maize Prediction in SW of Spain")
+st.title("Forage Maize Prediction in NW of Spain")
 
 # Layout con dos columnas
 col1, col2 = st.columns([1, 2])
