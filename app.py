@@ -60,7 +60,7 @@ with col1:
 
         whc_mean = df_site["WHC(mm)"].mean()
         c_mean = df_site["C(%)"].mean()
-        ph_mean = df_site["ph"].mean()
+        ph_mean = df_site["pH"].mean()
         anthe_mean = df_site["AnthesisDate(doy)"].mean()
         
         if weather == "Good Year":
