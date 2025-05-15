@@ -50,18 +50,19 @@ with col1:
         Tmax_max = df_site["Tmax(ºC)"].max()
         Tmax_mean = df_site["Tmax(ºC)"].mean()
 
-        prec_min = df_site["Precipitación(mm)"].min()
-        prec_max = df_site["Precipitación(mm)"].max()
-        prec_mean = df_site["Precipitación(mm)"].mean()
+        prec_min = df_site["Precipitation(mm)"].min()
+        prec_max = df_site["Precipitation(mm)"].max()
+        prec_mean = df_site["Precipitation(mm)"].mean()
 
-        rad_min = df_site["Radiación(MJ/m2 día)"].min()
-        rad_max = df_site["Radiación(MJ/m2 día)"].max()
-        rad_mean = df_site["Radiación(MJ/m2 día)"].mean()
+        rad_min = df_site["Radiation(MJ/m2 día)"].min()
+        rad_max = df_site["Radiation(MJ/m2 día)"].max()
+        rad_mean = df_site["Radiation(MJ/m2 día)"].mean()
 
         whc_mean = df_site["WHC(mm)"].mean()
         c_mean = df_site["C(%)"].mean()
         ph_mean = df_site["ph"].mean()
-
+        anthe_mean = df_site["AnthesisDate(doy)"].mean()
+        
         if weather == "Good Year":
             radiation = rad_max
             precipitation = prec_min
@@ -87,17 +88,17 @@ with col1:
         datapredict = pd.DataFrame([{
             "Site": site,
             "Cultivar": cultivar,
-            "Radiación(MJ/m2 día)": radiation,
-            "Precipitación(mm)": precipitation,
+            "Radiacion(Mj/m2day)": radiation,
+            "Precipitation(mm)": precipitation,
             "Tmax(ºC)": tmax,
             "Tmin(ºC)": tmin,
             "WHC(mm)": whc_mean,
             "C(%)": c_mean,
             "ph": ph_mean,
-            "Sowingdate": sowing_doy,
-            "Anthesis date": 0,
-            "HarvestDate": harvest_doy,
-            "Growing Season": growing_season
+            "SowingDate(doy)": sowing_doy,
+            "AnthesisDate(doy)":anthe_mean,
+            "HarvestDate(doy)": harvest_doy,
+            "GrowingSeason(day)": growing_season
         }])
 
         st.subheader("📋 Input Data for Prediction")
