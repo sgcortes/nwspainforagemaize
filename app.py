@@ -54,9 +54,9 @@ with col1:
         prec_max = df_site["Precipitation(mm)"].max()
         prec_mean = df_site["Precipitation(mm)"].mean()
 
-        rad_min = df_site["Radiation(MJ/m2 día)"].min()
-        rad_max = df_site["Radiation(MJ/m2 día)"].max()
-        rad_mean = df_site["Radiation(MJ/m2 día)"].mean()
+        rad_min = df_site["Radiation(MJ/m2day)"].min()
+        rad_max = df_site["Radiation(MJ/m2day)"].max()
+        rad_mean = df_site["Radiation(MJ/m2day)"].mean()
 
         whc_mean = df_site["WHC(mm)"].mean()
         c_mean = df_site["C(%)"].mean()
