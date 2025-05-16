@@ -1,4 +1,3 @@
-
 import lightgbm
 import streamlit as st
 import pandas as pd
@@ -134,7 +133,7 @@ with col1:
         datapredict = datapredict[expected_columns]
         st.write("Shape del DataFrame:", datapredict.shape)
         st.write("Columnas del DataFrame:", datapredict.columns.tolist())
-        st.session_state["pred_dm"] = round(model_dm.predict(datapredict)[0], 2)
+        st.session_state["pred_dm"] = round(model_dm.predict([datapredict)][0], 2)
         st.session_state["pred_ufl"] = round(model_ufl.predict(datapredict)[0], 2)
         st.session_state["pred_cp"] = round(model_cp.predict(datapredict)[0], 2)
 
