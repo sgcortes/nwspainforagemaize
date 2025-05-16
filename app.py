@@ -24,7 +24,14 @@ map_image = Image.open("AsturiasGalicia2.jpg")
 df = pd.read_excel("260324_ENG_MaizeForageSpainNWwtYearRadDay.xlsx")
 
 col1, col2 = st.columns([1, 2])
+with col2:
+    st.image(map_image, caption="Study area: Galicia, Asturias", use_container_width=True)
 
+    col_dm, col_ufl, col_cp = st.columns(3)
+    col_dm.markdown(f"### Dry Matter: {st.session_state.get('pred_dm', '...')} kgDM/ha")
+    col_ufl.markdown(f"### UFL/ha: {st.session_state.get('pred_ufl', '...')}")
+    col_cp.markdown(f"### Crude Protein: {st.session_state.get('pred_cp', '...')}")
+    
 with col1:
     st.header("Input Controls")
 
@@ -107,10 +114,4 @@ with col1:
         st.session_state["pred_ufl"] = round(model_ufl.predict(datapredict)[0], 2)
         st.session_state["pred_cp"] = round(model_cp.predict(datapredict)[0], 2)
 
-with col2:
-    st.image(map_image, caption="Study area: Galicia, Asturias", use_container_width=True)
 
-    col_dm, col_ufl, col_cp = st.columns(3)
-    col_dm.markdown(f"### Dry Matter: {st.session_state.get('pred_dm', '...')} kgDM/ha")
-    col_ufl.markdown(f"### UFL/ha: {st.session_state.get('pred_ufl', '...')}")
-    col_cp.markdown(f"### Crude Protein: {st.session_state.get('pred_cp', '...')}")
