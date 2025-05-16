@@ -4,6 +4,18 @@ import pandas as pd
 import joblib
 from PIL import Image
 
+#
+from PIL import Image
+
+# --- Código para verificar la versión de LightGBM ---
+try:
+    lgb_version = lightgbm.__version__
+    st.info(f"LightGBM version in this environment: {lgb_version}")
+except Exception as e:
+    st.error(f"Could not determine LightGBM version: {e}")
+# ---------------------------------------------------
+#
+
 st.set_page_config(layout="wide")
 st.title("🌽 Forage Maize Prediction in NW of Spain")
 
