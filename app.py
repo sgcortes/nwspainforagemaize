@@ -28,9 +28,7 @@ with col2:
     st.image(map_image, caption="Study area: Galicia, Asturias", use_container_width=True)
 
     col_dm, col_ufl, col_cp = st.columns(3)
-    #col_dm.markdown(f"### Dry Matter: {st.session_state.get('pred_dm', '...')} kgDM/ha")
-    col_dm.markdown(f"### Dry Matter: 0 kgDM/ha")
-    
+    col_dm.markdown(f"### Dry Matter: {st.session_state.get('pred_dm', '0')} kg DM/ha")
     col_ufl.markdown(f"### UFL/ha: {st.session_state.get('pred_ufl', '0')} ")
     col_cp.markdown(f"### Crude Protein: {st.session_state.get('pred_cp', '0')} kg CP/ha")
     
