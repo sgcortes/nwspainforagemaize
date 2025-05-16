@@ -52,7 +52,7 @@ streamlit run app.py
 
 ## 📬 Contact
 
-For questions or suggestions, please contact the development team.
+For questions or suggestions, please contact the development team. sgcortes@uniovi.es
 
 ---
 
