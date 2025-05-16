@@ -127,6 +127,7 @@ with col1:
 
         st.subheader("📋 Input Data for Prediction")
         st.dataframe(datapredict)
+        st.write("Shape del DataFrame:", datapredict.shape)
         st.write("Columnas del DataFrame:", datapredict.columns.tolist())
         st.session_state["pred_dm"] = round(model_dm.predict(datapredict)[0], 2)
         st.session_state["pred_ufl"] = round(model_ufl.predict(datapredict)[0], 2)
