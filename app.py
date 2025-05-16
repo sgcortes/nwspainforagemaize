@@ -124,6 +124,18 @@ with col1:
         datapredict["Site"] = datapredict["Site"].astype("category")
         datapredict["Cultivar"] = datapredict["Cultivar"].astype("category")
 
+        #
+        columnas = ['Site', 'Cultivar', 'Elevation(m)', 'Radiation(Mj/m2day)','Precipitation(mm)', 'Tmax(ºC)', 'Tmin(ºC)', 'WHC(mm)', 'C(%)', 'pH',
+       'SowingDate(doy)', 'AnthesisDate(doy)', 'HarvestDate(doy)','GrowingSeason(day)']
+
+        datos = ['Barcia','A200',25,21,56.6,20.5,16.7,90,1.8999999999999997,5.200000000000003,133,228.70531400966183,250,117]
+        X_nuevos_datos = pd.DataFrame([datos], columns=columnas)
+        X_nuevos_datos["Site"] = X_nuevos_datos["Site"].astype("category")
+        X_nuevos_datos["Cultivar"] = X_nuevos_datos["Cultivar"].astype("category")
+        print(X_nuevos_datos.shape)
+        datapredict = X_nuevos_datos 
+        #
+        
         st.subheader("📋 Input Data for Prediction")
         st.dataframe(datapredict)
         expected_columns = [
