@@ -127,6 +127,11 @@ with col1:
 
         st.subheader("📋 Input Data for Prediction")
         st.dataframe(datapredict)
+        expected_columns = [
+    'Site', 'Cultivar', 'Elevation(m)', 'Radiation(Mj/m2day)', 'Precipitation(mm)',
+    'Tmax(ºC)', 'Tmin(ºC)', 'WHC(mm)', 'C(%)', 'pH',
+    'SowingDate(doy)', 'AnthesisDate(doy)', 'HarvestDate(doy)', 'GrowingSeason(day)']
+        datapredict = datapredict[expected_columns]
         st.write("Shape del DataFrame:", datapredict.shape)
         st.write("Columnas del DataFrame:", datapredict.columns.tolist())
         st.session_state["pred_dm"] = round(model_dm.predict(datapredict)[0], 2)
