@@ -31,8 +31,8 @@ with col2:
     #col_dm.markdown(f"### Dry Matter: {st.session_state.get('pred_dm', '...')} kgDM/ha")
     col_dm.markdown(f"### Dry Matter: 0 kgDM/ha")
     
-    col_ufl.markdown(f"### UFL/ha: {st.session_state.get('pred_ufl', '...')}")
-    col_cp.markdown(f"### Crude Protein: {st.session_state.get('pred_cp', '...')}")
+    col_ufl.markdown(f"### UFL/ha: {st.session_state.get('pred_ufl', '0')} ")
+    col_cp.markdown(f"### Crude Protein: {st.session_state.get('pred_cp', '0')} kg CP/ha")
     
 with col1:
     st.header("Input Controls")
