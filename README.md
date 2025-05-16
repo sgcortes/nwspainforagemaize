@@ -39,17 +39,6 @@ Ensure your project folder contains the following files:
 ```
 
 ---
-
-## 🚀 How to Deploy on Streamlit Cloud
-
-1. Upload all files to a public GitHub repository.
-2. Visit [streamlit.io/cloud](https://streamlit.io/cloud).
-3. Log in and click **"New app"**.
-4. Select your repo and make sure `app.py` is the entry point.
-5. Streamlit will automatically install dependencies from `requirements.txt`.
-
----
-
 ## 🧪 Run Locally
 
 To run the app on your local machine:
