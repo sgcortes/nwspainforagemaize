@@ -119,6 +119,9 @@ with col2:
     st.image(map_image, caption="Study area: Galicia, Asturias", use_container_width=True)
 
     if "pred_dm" in st.session_state:
+        del st.session_state["pred_dm"]
+        del st.session_state["pred_ufl"]
+        del st.session_state["pred_cp"]
         col_dm, col_ufl, col_cp = st.columns(3)
         col_dm.markdown(f"### Dry Matter: {st.session_state['pred_dm']} kgDM/ha")
         col_ufl.markdown(f"### UFL/ha: {st.session_state['pred_ufl']}")
