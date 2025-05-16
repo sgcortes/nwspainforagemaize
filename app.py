@@ -9,7 +9,7 @@ st.title("🌽 Forage Maize Prediction in NW of Spain")
 
 # Cargar modelos LightGBM
 try:
-    model_dm = joblib.load("DM_lgb_best_model.pkl")
+    model_dm = joblib.load("DM2_lgb_best_model.pkl")
     model_ufl = joblib.load("UFL_lgb_best_model.pkl")
     model_cp = joblib.load("CP_lgb_best_model.pkl")
 except Exception as e:
