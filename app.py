@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import pickle
 from PIL import Image
+import joblib
 
 # Cargar modelos LightGBM
 model_dm = joblib.load("DM_lgb_best_model.pkl")
