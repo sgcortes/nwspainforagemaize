@@ -8,20 +8,15 @@ import joblib
 
 st.set_page_config(layout="wide")
 st.title("🌽 Forage Maize Prediction in NW of Spain")
+
 # Cargar modelos LightGBM
-model_dm = joblib.load("DM_lgb_best_model.pkl")
-model_ufl = joblib.load("UFL_lgb_best_model.pkl")
-model_cp = joblib.load("CP_lgb_best_model.pkl")
-'''
-with open("DM_lgb_best_model.pkl", "rb") as f:
-    model_dm = pickle.load(f)
+try:
+    model_dm = joblib.load("DM_lgb_best_model.pkl")
+    model_ufl = joblib.load("UFL_lgb_best_model.pkl")
+    model_cp = joblib.load("CP_lgb_best_model.pkl")
+except Exception as e:
+    st.error(f"Error loading models: {e}")
 
-with open("UFL_lgb_best_model.pkl", "rb") as f:
-    model_ufl = pickle.load(f)
-
-with open("CP_lgb_best_model.pkl", "rb") as f:
-    model_cp = pickle.load(f)
-'''
 # Cargar mapa
 map_image = Image.open("AsturiasGalicia2.jpg")
 
@@ -110,7 +105,8 @@ with col1:
 
         st.subheader("📋 Input Data for Prediction")
         st.dataframe(datapredict)
-
+        datapredict["Site"] = datapredict["Site"].astype("category")
+        datapredict["Cultivar"] = datapredict["Cultivar"].astype("category")
         pred_dm = model_dm.predict(datapredict)[0]
         pred_ufl = model_ufl.predict(datapredict)[0]
         pred_cp = model_cp.predict(datapredict)[0]
