@@ -5,6 +5,9 @@ import pickle
 from PIL import Image
 import joblib
 
+
+st.set_page_config(layout="wide")
+st.title("🌽 Forage Maize Prediction in NW of Spain")
 # Cargar modelos LightGBM
 model_dm = joblib.load("DM_lgb_best_model.pkl")
 model_ufl = joblib.load("UFL_lgb_best_model.pkl")
@@ -25,8 +28,7 @@ map_image = Image.open("AsturiasGalicia2.jpg")
 # Cargar datos desde Excel
 df = pd.read_excel("260324_ENG_MaizeForageSpainNWwtYearRadDay.xlsx")
 
-st.set_page_config(layout="wide")
-st.title("🌽 Forage Maize Prediction in NW of Spain")
+
 
 col1, col2 = st.columns([1, 2])
 
