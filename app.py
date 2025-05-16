@@ -13,7 +13,7 @@ st.title("🌽 Forage Maize Prediction in NW of Spain")
 try:
     model_dm = joblib.load("DM_lgb_best_model.pkl")
     model_ufl = joblib.load("UFL_lgb_best_model.pkl")
-    model_cp = joblib.load("CP_lgb_best_model.pkl")
+    #model_cp = joblib.load("CP_lgb_best_model.pkl")
 except Exception as e:
     st.error(f"Error loading models: {e}")
 
