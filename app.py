@@ -84,6 +84,23 @@ with col1:
             tmin = Tmin_mean
             tmax = Tmax_mean
 
+        if site == "Deza":
+            elevation = 400
+        elif site =="Barcia":
+            elevation = 25
+        elif site =="Grado":
+            elevation = 50
+        elif site =="Ordes":
+            elevation = 300
+        elif site =="Ribadeo":
+            elevation = 43
+        elif site =="Ribadeo":
+            elevation = 43
+        elif site =="Sarria":
+            elevation = 520
+        elif site =="Villaviciosa":
+            elevation = 10
+        
         sowing_doy = sowing_map[sowing_label]
         harvest_doy = harvest_map[harvest_label]
         growing_season = harvest_doy - sowing_doy
@@ -91,6 +108,7 @@ with col1:
         datapredict = pd.DataFrame([{
             "Site": site,
             "Cultivar": cultivar,
+            "Elevation(m)": elevation,
             "Radiacion(Mj/m2day)": radiation,
             "Precipitation(mm)": precipitation,
             "Tmax(ºC)": tmax,
