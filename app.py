@@ -5,6 +5,10 @@ import pickle
 from PIL import Image
 
 # Cargar modelos LightGBM
+model_dm = joblib.load("DM_lgb_best_model.pkl")
+model_ufl = joblib.load("UFL_lgb_best_model.pkl")
+model_cp = joblib.load("CP_lgb_best_model.pkl")
+'''
 with open("DM_lgb_best_model.pkl", "rb") as f:
     model_dm = pickle.load(f)
 
@@ -13,7 +17,7 @@ with open("UFL_lgb_best_model.pkl", "rb") as f:
 
 with open("CP_lgb_best_model.pkl", "rb") as f:
     model_cp = pickle.load(f)
-
+'''
 # Cargar mapa
 map_image = Image.open("AsturiasGalicia2.jpg")
 
