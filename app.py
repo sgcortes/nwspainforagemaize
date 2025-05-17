@@ -30,7 +30,9 @@ with col2:
     col_dm.markdown(f"### Dry Matter: {st.session_state.get('pred_dm', '0')} kg DM/ha")
     col_ufl.markdown(f"### UFL/ha: {st.session_state.get('pred_ufl', '0')} ")
     col_cp.markdown(f"### Crude Protein: {st.session_state.get('pred_cp', '0')} kg CP/ha")
-    
+
+    st.subheader("📋 Input Data for Prediction")
+    st.dataframe(datapredict)
 with col1:
     st.header("Input Controls")
 
@@ -136,8 +138,6 @@ with col1:
         datapredict = X_nuevos_datos 
         #
         
-        st.subheader("📋 Input Data for Prediction")
-        st.dataframe(datapredict)
         expected_columns = [
     'Site', 'Cultivar', 'Elevation(m)', 'Radiation(Mj/m2day)', 'Precipitation(mm)',
     'Tmax(ºC)', 'Tmin(ºC)', 'WHC(mm)', 'C(%)', 'pH',
