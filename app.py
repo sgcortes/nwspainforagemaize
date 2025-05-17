@@ -161,7 +161,3 @@ with col1:
         st.session_state["pred_cp"] = round(model_cp.predict(datapredict)[0], 2)
 
 
-# --- El resto del código (si hay algo más) ---
-# Por ejemplo, visualizaciones basadas en las predicciones, etc.
-# Asegúrate de que este código también maneja el estado '---' o 'Error' de session_state.
-
