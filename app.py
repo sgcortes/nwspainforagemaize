@@ -7,36 +7,6 @@ from PIL import Image
 st.set_page_config(layout="wide")
 st.title("🌽 Forage Maize Prediction in NW of Spain")
 #---------------------
-# --- Código para verificar las versiones de las librerías ---
-st.subheader("📦 Versiones de Librerías")
-
-try:
-    lgb_version = lightgbm.__version__
-    st.info(f"LightGBM version: {lgb_version}")
-except Exception as e:
-    st.error(f"Error getting LightGBM version: {e}")
-
-try:
-    pandas_version = pd.__version__
-    st.info(f"Pandas version: {pandas_version}")
-except Exception as e:
-    st.error(f"Error getting Pandas version: {e}")
-
-try:
-    joblib_version = joblib.__version__
-    st.info(f"Joblib version: {joblib.__version__}")
-except Exception as e:
-    st.error(f"Error getting Joblib version: {e}")
-
-# Opcional: Si usas scikit-learn directamente en la app (e.g., para permutation_importance si la moviste aquí)
-# try:
-#     import sklearn
-#     st.info(f"Scikit-learn version: {sklearn.__version__}")
-# except ImportError:
-#      st.info("Scikit-learn not imported.")
-# except Exception as e:
-#     st.error(f"Error getting Scikit-learn version: {e}")
-
 # Cargar modelos LightGBM
 try:
     model_dm = joblib.load("DM_lgb_best_model.pkl")
