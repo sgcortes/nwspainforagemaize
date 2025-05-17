@@ -25,12 +25,28 @@ df = pd.read_excel("260324_ENG_MaizeForageSpainNWwtYearRadDay.xlsx")
 col1, col2 = st.columns([1, 2])
 with col2:
     st.image(map_image, caption="Study area: Galicia, Asturias", use_container_width=True)
+    # Inicializar session_state si aún no existe
+    if 'pred_dm' not in st.session_state:
+        st.session_state['pred_dm'] = '---'
+    if 'pred_ufl' not in st.session_state:
+        st.session_state['pred_ufl'] = '---'
+    if 'pred_cp' not in st.session_state:
+        st.session_state['pred_cp'] = '---'
 
+
+col_dm, col_ufl, col_cp = st.columns(3)
+
+# Usar st.metric para mostrar las predicciones
+col_dm.metric(label="Dry Matter (kg DM/ha)", value=st.session_state.get('pred_dm', '---'))
+col_ufl.metric(label="UFL/ha", value=st.session_state.get('pred_ufl', '---'))
+col_cp.metric(label="Crude Protein (kg CP/ha)", value=st.session_state.get('pred_cp', '---'))
+
+    '''
     col_dm, col_ufl, col_cp = st.columns(3)
     col_dm.markdown(f"### Dry Matter: {st.session_state.get('pred_dm', '0')} kg DM/ha")
     col_ufl.markdown(f"### UFL/ha: {st.session_state.get('pred_ufl', '0')} ")
     col_cp.markdown(f"### Crude Protein: {st.session_state.get('pred_cp', '0')} kg CP/ha")
-
+    '''
     #st.subheader("📋 Input Data for Prediction")
     #st.dataframe(datapredict)
 with col1:
