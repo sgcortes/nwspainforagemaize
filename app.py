@@ -6,6 +6,7 @@ from PIL import Image
 import os # Importar os para verificar archivos
 
 # --- Código para verificar las versiones de las librerías ---
+st.set_page_config(layout="wide")
 st.subheader("📦 Versiones de Librerías")
 
 try:
@@ -28,7 +29,7 @@ except Exception as e:
 # ------------------------------------------------------------
 
 
-st.set_page_config(layout="wide")
+
 st.title("🌽 Forage Maize Prediction in NW of Spain")
 
 #---------------------
