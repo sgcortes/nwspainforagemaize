@@ -31,8 +31,8 @@ with col2:
     col_ufl.markdown(f"### UFL/ha: {st.session_state.get('pred_ufl', '0')} ")
     col_cp.markdown(f"### Crude Protein: {st.session_state.get('pred_cp', '0')} kg CP/ha")
 
-    st.subheader("📋 Input Data for Prediction")
-    st.dataframe(datapredict)
+    #st.subheader("📋 Input Data for Prediction")
+    #st.dataframe(datapredict)
 with col1:
     st.header("Input Controls")
 
