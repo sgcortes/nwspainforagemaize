@@ -41,12 +41,7 @@ col_dm.metric(label="Dry Matter (kg DM/ha)", value=st.session_state.get('pred_dm
 col_ufl.metric(label="UFL/ha", value=st.session_state.get('pred_ufl', '---'))
 col_cp.metric(label="Crude Protein (kg CP/ha)", value=st.session_state.get('pred_cp', '---'))
 
-    '''
-    col_dm, col_ufl, col_cp = st.columns(3)
-    col_dm.markdown(f"### Dry Matter: {st.session_state.get('pred_dm', '0')} kg DM/ha")
-    col_ufl.markdown(f"### UFL/ha: {st.session_state.get('pred_ufl', '0')} ")
-    col_cp.markdown(f"### Crude Protein: {st.session_state.get('pred_cp', '0')} kg CP/ha")
-    '''
+   
     #st.subheader("📋 Input Data for Prediction")
     #st.dataframe(datapredict)
 with col1:
