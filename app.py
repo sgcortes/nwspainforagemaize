@@ -3,29 +3,94 @@ import streamlit as st
 import pandas as pd
 import joblib
 from PIL import Image
+import os # Importar os para verificar archivos
+
+# --- Código para verificar las versiones de las librerías ---
+st.subheader("📦 Versiones de Librerías")
+
+try:
+    lgb_version = lightgbm.__version__
+    st.info(f"LightGBM version: {lgb_version}")
+except Exception as e:
+    st.error(f"Error getting LightGBM version: {e}")
+
+try:
+    pandas_version = pd.__version__
+    st.info(f"Pandas version: {pandas_version}")
+except Exception as e:
+    st.error(f"Error getting Pandas version: {e}")
+
+try:
+    joblib_version = joblib.__version__
+    st.info(f"Joblib version: {joblib.__version__}")
+except Exception as e:
+    st.error(f"Error getting Joblib version: {e}")
+# ------------------------------------------------------------
+
 
 st.set_page_config(layout="wide")
 st.title("🌽 Forage Maize Prediction in NW of Spain")
+
 #---------------------
-# Cargar modelos LightGBM
+# Cargar modelos LightGBM (Asegúrate de usar los nombres de archivo .pkl correctos)
+st.subheader("⚙️ Carga de Modelos")
 try:
+    # VERIFICA estos nombres de archivo .pkl si son exactamente los que guardaste
     model_dm = joblib.load("DM_lgb_best_model.pkl")
-    model_ufl = joblib.load("UFL_lgb_best_model.pkl")
-    model_cp = joblib.load("CP_lgb_best_model.pkl")
+    model_ufl = joblib.load("UFL_lgb_best_model.pkl") # Asegúrate del nombre correcto (UFL_lgb_best_model.pkl o UFL_lgb_best_model.pkl)
+    model_cp = joblib.load("CP_lgb_best_model.pkl")   # Asegúrate del nombre correcto (CP_lgb_best_model.pkl o CP_lgb_best_model.pkl)
+    st.success("✅ Modelos cargados correctamente.")
+except FileNotFoundError as e:
+    st.error(f"❌ Error: Archivo de modelo no encontrado - {e}. Asegúrate de que los archivos .pkl están en la ubicación correcta en Streamlit Cloud.")
+    st.stop() # Detiene la ejecución si los modelos no cargan
 except Exception as e:
-    st.error(f"Error loading models: {e}")
-    st.stop()
+    st.error(f"❌ Error al cargar modelos: {e}")
+    st.stop() # Detiene la ejecución si los modelos no cargan
+
 
 # Cargar mapa
-map_image = Image.open("AsturiasGalicia2.jpg")
+map_file_path = "AsturiasGalicia2.jpg"
+if os.path.exists(map_file_path):
+    map_image = Image.open(map_file_path)
+    map_caption = "Study area: Galicia, Asturias"
+    map_found = True
+else:
+    st.warning(f"🗺️ Archivo de mapa no encontrado ({map_file_path}). La imagen no se mostrará.")
+    map_image = None
+    map_caption = "Map not available"
+    map_found = False
 
-# Cargar datos desde Excel
-df = pd.read_excel("260324_ENG_MaizeForageSpainNWwtYearRadDay.xlsx")
 
-col1, col2 = st.columns([1, 2])
+# Cargar datos desde Excel (para listas desplegables)
+excel_file_path = "260324_ENG_MaizeForageSpainNWwtYearRadDay.xlsx"
+st.subheader("📂 Carga de Datos de Entrada")
+try:
+    if os.path.exists(excel_file_path):
+        df = pd.read_excel(excel_file_path)
+        st.success("✅ Datos de Excel cargados correctamente.")
+        excel_data_found = True
+        # Obtener listas únicas para selectbox
+        site_options = sorted(df['Site'].unique().tolist())
+        cultivar_options = sorted(df['Cultivar'].unique().tolist())
+    else:
+        st.error(f"❌ Error: Archivo Excel no encontrado ({excel_file_path}). No se pueden cargar los datos de entrada.")
+        excel_data_found = False
+        st.stop() # Detiene la ejecución si no se pueden cargar los datos
+except Exception as e:
+    st.error(f"❌ Error al cargar datos de Excel: {e}")
+    excel_data_found = False
+    st.stop() # Detiene la ejecución si ocurre otro error
+
+
+# --- Diseño de la interfaz (Columnas para mapa y inputs) ---
+col1, col2 = st.columns([1, 2]) # Columna 1 para inputs, Columna 2 para mapa y outputs
+
 with col2:
-    st.image(map_image, caption="Study area: Galicia, Asturias", use_container_width=True)
-    # Inicializar session_state si aún no existe
+    if map_found:
+       st.image(map_image, caption=map_caption, use_container_width=True)
+
+    st.subheader("📈 Predicciones")
+    # Inicializar session_state para las predicciones si no existen
     if 'pred_dm' not in st.session_state:
         st.session_state['pred_dm'] = '---'
     if 'pred_ufl' not in st.session_state:
@@ -33,131 +98,105 @@ with col2:
     if 'pred_cp' not in st.session_state:
         st.session_state['pred_cp'] = '---'
 
-
+    # Mostrar predicciones usando st.metric (ESTO VA FUERA DEL BOTÓN)
     col_dm, col_ufl, col_cp = st.columns(3)
-
-    # Usar st.metric para mostrar las predicciones
     col_dm.metric(label="Dry Matter (kg DM/ha)", value=st.session_state.get('pred_dm', '---'))
     col_ufl.metric(label="UFL/ha", value=st.session_state.get('pred_ufl', '---'))
     col_cp.metric(label="Crude Protein (kg CP/ha)", value=st.session_state.get('pred_cp', '---'))
 
-    
-    #st.subheader("📋 Input Data for Prediction")
-    #st.dataframe(datapredict)
+
+# --- Sidebar o Columna para Inputs ---
+# Si prefieres Sidebar:
+# st.sidebar.header("Input Parameters")
+# with st.sidebar:
+#     st.header("Parámetros de Entrada")
+#     # ... tus inputs aquí ...
+
+# Usando Columna 1 para inputs (como en tu diseño original)
 with col1:
-    st.header("Input Controls")
+    st.header("Parameters")
 
-    site = st.selectbox("Nearest Site", sorted(df["Site"].unique()))
-    cultivar = st.selectbox("Cultivar", ["A200", "A300", "A400", "G200", "G300", "G400"])
-    sowing_label = st.selectbox("Sowing Date", ["Mid-May", "End-May", "Early June"])
-    harvest_label = st.selectbox("Harvest Date", ["Early-Sept", "Mid-Sept", "Late-Sept"])
-    weather = st.selectbox("Radiation & Weather", ["Good Year", "Average Year", "Bad Year"])
+    # Usar datos cargados para selectbox
+    if excel_data_found:
+        input_Site = st.selectbox("Site", site_options)
+        input_Cultivar = st.selectbox("Cultivar", cultivar_options)
+    else:
+        # Opciones por defecto si el Excel no carga (menos útil)
+        input_Site = st.selectbox("Site", ["DefaultSite"])
+        input_Cultivar = st.selectbox("Cultivar", ["DefaultCultivar"])
 
-    sowing_map = {"Mid-May": 133, "End-May": 151, "Early June": 167}
-    harvest_map = {"Early-Sept": 250, "Mid-Sept": 264, "Late-Sept": 287}
 
+    input_Elevation = st.number_input("Elevation(m)", value=25.0, min_value=0.0, format="%.1f")
+    input_Radiation = st.number_input("Radiation(Mj/m2day)", value=21.0, min_value=0.0, format="%.1f")
+    input_Precipitation = st.number_input("Precipitation(mm)", value=56.6, min_value=0.0, format="%.1f")
+    input_Tmax = st.number_input("Tmax(ºC)", value=20.5, format="%.1f")
+    input_Tmin = st.number_input("Tmin(ºC)", value=16.7, format="%.1f")
+    input_WHC = st.number_input("WHC(mm)", value=90.0, min_value=0.0, format="%.1f")
+    input_C = st.number_input("C(%)", value=1.9, min_value=0.0, format="%.2f") # Ajustado a 1.9 como en tu ejemplo
+    input_pH = st.number_input("pH", value=5.2, min_value=0.0, max_value=14.0, format="%.2f") # Ajustado a 5.2
+    input_SowingDate_doy = st.number_input("SowingDate(doy)", value=133, min_value=1, max_value=366, step=1)
+    input_AnthesisDate_doy = st.number_input("AnthesisDate(doy)", value=229, min_value=1, max_value=366, step=1) # Ajustado a 229 para redondear el ejemplo
+    input_HarvestDate_doy = st.number_input("HarvestDate(doy)", value=250, min_value=1, max_value=366, step=1)
+
+    # Calcular GrowingSeason(day) - Asegúrate de que la lógica es correcta para tus datos
+    # Basado en tu ejemplo (250 - 133 = 117), parece HarvestDate - SowingDate
+    input_GrowingSeason = input_HarvestDate_doy - input_SowingDate_doy
+    st.number_input("GrowingSeason(day)", value=input_GrowingSeason, disabled=True) # Mostrar como calculado
+
+
+    # --- Botón de Predicción ---
     if st.button("Predict"):
-        df_site = df[df["Site"] == site]
+        # --- AHORA TODO ESTE BLOQUE ESTÁ DENTRO DE try...except ---
+        try:
+            # Asegúrate de que las variables de input_X están definidas
+            # Crea el DataFrame con los inputs actuales del usuario
+            input_values = [
+                input_Site, input_Cultivar, input_Elevation, input_Radiation, input_Precipitation,
+                input_Tmax, input_Tmin, input_WHC, input_C, input_pH,
+                input_SowingDate_doy, input_AnthesisDate_doy, input_HarvestDate_doy, input_GrowingSeason
+            ]
 
-        Tmin_min = df_site["Tmin(ºC)"].min()
-        Tmin_max = df_site["Tmin(ºC)"].max()
-        Tmin_mean = df_site["Tmin(ºC)"].mean()
+            column_names = ['Site', 'Cultivar', 'Elevation(m)', 'Radiation(Mj/m2day)', 'Precipitation(mm)',
+                            'Tmax(ºC)', 'Tmin(ºC)', 'WHC(mm)', 'C(%)', 'pH',
+                            'SowingDate(doy)', 'AnthesisDate(doy)', 'HarvestDate(doy)', 'GrowingSeason(day)']
 
-        Tmax_min = df_site["Tmax(ºC)"].min()
-        Tmax_max = df_site["Tmax(ºC)"].max()
-        Tmax_mean = df_site["Tmax(ºC)"].mean()
+            datapredict = pd.DataFrame([input_values], columns=column_names)
 
-        prec_min = df_site["Precipitation(mm)"].min()
-        prec_max = df_site["Precipitation(mm)"].max()
-        prec_mean = df_site["Precipitation(mm)"].mean()
+            # Convertir a categóricas - CRUCIAL que estos dtypes y los VALORES coincidan con el entrenamiento
+            # Streamlit selectbox devuelve strings, convertir a 'category' es necesario
+            datapredict["Site"] = datapredict["Site"].astype("category")
+            datapredict["Cultivar"] = datapredict["Cultivar"].astype("category")
 
-        rad_min = df_site["Radiation(Mj/m2day)"].min()
-        rad_max = df_site["Radiation(Mj/m2day)"].max()
-        rad_mean = df_site["Radiation(Mj/m2day)"].mean()
+            # Puedes mostrar el DataFrame de input si quieres para depurar, pero quítalo en producción
+            # st.subheader("📋 Input Data for Prediction (Debug)")
+            # st.dataframe(datapredict)
 
-        whc_mean = df_site["WHC(mm)"].mean()
-        c_mean = df_site["C(%)"].mean()
-        ph_mean = df_site["pH"].mean()
-        anthe_mean = df_site["AnthesisDate(doy)"].mean()
 
-        if weather == "Good Year":
-            radiation = rad_max
-            precipitation = prec_min
-            tmin = Tmin_max
-            tmax = Tmax_min
-        elif weather == "Bad Year":
-            radiation = rad_min
-            precipitation = prec_min
-            tmin = Tmin_min
-            tmax = Tmax_max
-        else:
-            radiation = rad_mean
-            precipitation = prec_mean
-            tmin = Tmin_mean
-            tmax = Tmax_mean
+            # Realizar predicciones con modelos cargados (desde joblib)
+            # Asegúrate de que model_dm, model_ufl, model_cp fueron cargados exitosamente arriba
+            pred_dm = model_dm.predict(datapredict)[0]
+            pred_ufl = model_ufl.predict(datapredict)[0]
+            pred_cp = model_cp.predict(datapredict)[0]
 
-        if site == "Deza":
-            elevation = 400
-        elif site =="Barcia":
-            elevation = 25
-        elif site =="Grado":
-            elevation = 50
-        elif site =="Ordes":
-            elevation = 300
-        elif site =="Ribadeo":
-            elevation = 43
-        elif site =="Ribadeo":
-            elevation = 43
-        elif site =="Sarria":
-            elevation = 520
-        elif site =="Villaviciosa":
-            elevation = 10
-        
-        sowing_doy = sowing_map[sowing_label]
-        harvest_doy = harvest_map[harvest_label]
-        growing_season = harvest_doy - sowing_doy
+            # Almacenar las predicciones redondeadas en session_state
+            # Streamlit detectará el cambio en session_state y hará un rerun,
+            # lo que actualizará los st.metric que están fuera del botón.
+            st.session_state["pred_dm"] = round(pred_dm, 2)
+            st.session_state["pred_ufl"] = round(pred_ufl, 2)
+            st.session_state["pred_cp"] = round(pred_cp, 2)
 
-        datapredict = pd.DataFrame([{
-            "Site": site,
-            "Cultivar": cultivar,
-            "Elevation(m)": elevation,
-            "Radiation(Mj/m2day)": radiation,        
-            "Precipitation(mm)": precipitation,
-            "Tmax(ºC)": tmax,
-            "Tmin(ºC)": tmin,
-            "WHC(mm)": whc_mean,
-            "C(%)": c_mean,
-            "pH": ph_mean,                           
-            "SowingDate(doy)": sowing_doy,
-            "AnthesisDate(doy)": anthe_mean,
-            "HarvestDate(doy)": harvest_doy,
-            "GrowingSeason(day)": growing_season
-        }])
+            st.success("✅ Predicciones realizadas correctamente.")
 
-        datapredict["Site"] = datapredict["Site"].astype("category")
-        datapredict["Cultivar"] = datapredict["Cultivar"].astype("category")
+        except Exception as e:
+            # Si ocurre CUALQUIER error durante la creación del DF o la predicción:
+            st.error(f"❌ Error durante el proceso de predicción: {e}")
+            # Opcional: resetear las predicciones en caso de error
+            st.session_state["pred_dm"] = 'Error'
+            st.session_state["pred_ufl"] = 'Error'
+            st.session_state["pred_cp"] = 'Error'
 
-        #
-        columnas = ['Site', 'Cultivar', 'Elevation(m)', 'Radiation(Mj/m2day)','Precipitation(mm)', 'Tmax(ºC)', 'Tmin(ºC)', 'WHC(mm)', 'C(%)', 'pH',
-       'SowingDate(doy)', 'AnthesisDate(doy)', 'HarvestDate(doy)','GrowingSeason(day)']
 
-        datos = ['Barcia','A200',25,21,56.6,20.5,16.7,90,1.8999999999999997,5.200000000000003,133,228.70531400966183,250,117]
-        X_nuevos_datos = pd.DataFrame([datos], columns=columnas)
-        X_nuevos_datos["Site"] = X_nuevos_datos["Site"].astype("category")
-        X_nuevos_datos["Cultivar"] = X_nuevos_datos["Cultivar"].astype("category")
-        print(X_nuevos_datos.shape)
-        datapredict = X_nuevos_datos 
-        #
-        
-        expected_columns = [
-    'Site', 'Cultivar', 'Elevation(m)', 'Radiation(Mj/m2day)', 'Precipitation(mm)',
-    'Tmax(ºC)', 'Tmin(ºC)', 'WHC(mm)', 'C(%)', 'pH',
-    'SowingDate(doy)', 'AnthesisDate(doy)', 'HarvestDate(doy)', 'GrowingSeason(day)']
-        datapredict = datapredict[expected_columns]
-        #st.write("Shape del DataFrame:", datapredict.shape)
-        #st.write("Columnas del DataFrame:", datapredict.columns.tolist())
-        st.session_state["pred_dm"] = round(model_dm.predict(datapredict)[0], 2)
-        st.session_state["pred_ufl"] = round(model_ufl.predict(datapredict)[0], 2)
-        st.session_state["pred_cp"] = round(model_cp.predict(datapredict)[0], 2)
-
+# --- El resto del código (si hay algo más) ---
+# Por ejemplo, visualizaciones basadas en las predicciones, etc.
+# Asegúrate de que este código también maneja el estado '---' o 'Error' de session_state.
 
