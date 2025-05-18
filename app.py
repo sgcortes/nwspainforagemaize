@@ -136,19 +136,7 @@ with col1:
 
         datapredict["Site"] = datapredict["Site"].astype("category")
         datapredict["Cultivar"] = datapredict["Cultivar"].astype("category")
-
-        #
-        columnas = ['Site', 'Cultivar', 'Elevation(m)', 'Radiation(Mj/m2day)','Precipitation(mm)', 'Tmax(ºC)', 'Tmin(ºC)', 'WHC(mm)', 'C(%)', 'pH',
-       'SowingDate(doy)', 'AnthesisDate(doy)', 'HarvestDate(doy)','GrowingSeason(day)']
-
-        datos = ['Barcia','A200',25,21,56.6,20.5,16.7,90,1.8999999999999997,5.200000000000003,133,228.70531400966183,250,117]
-        X_nuevos_datos = pd.DataFrame([datos], columns=columnas)
-        X_nuevos_datos["Site"] = X_nuevos_datos["Site"].astype("category")
-        X_nuevos_datos["Cultivar"] = X_nuevos_datos["Cultivar"].astype("category")
-        print(X_nuevos_datos.shape)
-        datapredict = X_nuevos_datos 
-        #
-        
+       
         expected_columns = [
     'Site', 'Cultivar', 'Elevation(m)', 'Radiation(Mj/m2day)', 'Precipitation(mm)',
     'Tmax(ºC)', 'Tmin(ºC)', 'WHC(mm)', 'C(%)', 'pH',
@@ -156,8 +144,11 @@ with col1:
         datapredict = datapredict[expected_columns]
         #st.write("Shape del DataFrame:", datapredict.shape)
         #st.write("Columnas del DataFrame:", datapredict.columns.tolist())
+    try:
         st.session_state["pred_dm"] = round(model_dm.predict(datapredict)[0], 2)
         st.session_state["pred_ufl"] = round(model_ufl.predict(datapredict)[0], 2)
         st.session_state["pred_cp"] = round(model_cp.predict(datapredict)[0], 2)
-
+    except Exception as e:
+        st.error(f"❌ Error durante la predicción: {e}")
+        st.stop()
 
