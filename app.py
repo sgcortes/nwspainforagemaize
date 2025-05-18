@@ -119,7 +119,7 @@ if st.session_state['run_prediction']:
         "C(%)": c_mean,
         "pH": ph_mean,
         "SowingDate(doy)": sowing_doy,
-        "AnthesisDate(doy)": anthe_mean,
+        "AnthesisDate(doy)": round(anthe_mean),
         "HarvestDate(doy)": harvest_doy,
         "GrowingSeason(day)": growing_season
     }])
