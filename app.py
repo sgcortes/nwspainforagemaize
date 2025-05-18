@@ -23,23 +23,19 @@ map_image = Image.open("AsturiasGalicia2.jpg")
 # Cargar datos desde Excel
 df = pd.read_excel("260324_ENG_MaizeForageSpainNWwtYearRadDay.xlsx")
 
+# Inicializar session_state de forma robusta al principio
+for key in ["pred_dm", "pred_ufl", "pred_cp"]:
+    if key not in st.session_state:
+        st.session_state[key] = '---'
+
 col1, col2 = st.columns([1, 2])
 with col2:
     st.image(map_image, caption="Study area: Galicia, Asturias", use_container_width=True)
 
-    # Inicializar session_state si aún no existe
-    if 'pred_dm' not in st.session_state:
-        st.session_state['pred_dm'] = '---'
-    if 'pred_ufl' not in st.session_state:
-        st.session_state['pred_ufl'] = '---'
-    if 'pred_cp' not in st.session_state:
-        st.session_state['pred_cp'] = '---'
-
     col_dm, col_ufl, col_cp = st.columns(3)
-    col_dm.metric(label="Dry Matter (kg DM/ha)", value=st.session_state.get('pred_dm', '---'))
-    col_ufl.metric(label="UFL/ha", value=st.session_state.get('pred_ufl', '---'))
-    col_cp.metric(label="Crude Protein (kg CP/ha)", value=st.session_state.get('pred_cp', '---'))
-
+    col_dm.metric(label="Dry Matter (kg DM/ha)", value=st.session_state["pred_dm"])
+    col_ufl.metric(label="UFL/ha", value=st.session_state["pred_ufl"])
+    col_cp.metric(label="Crude Protein (kg CP/ha)", value=st.session_state["pred_cp"])
 with col1:
     st.header("Input Controls")
 
