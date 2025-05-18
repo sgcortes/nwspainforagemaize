@@ -31,7 +31,7 @@ df = pd.read_excel("260324_ENG_MaizeForageSpainNWwtYearRadDay.xlsx")
 
 col1, col2 = st.columns([1, 2])
 with col2:
-    st.image(map_image, caption="Study area: Galicia, Asturias", use_container_width=True)
+    st.image(map_image, caption="Study area: Galicia, Asturias. SPAIN", use_container_width=True)
     col_dm, col_ufl, col_cp = st.columns(3)
     col_dm.metric(label="Dry Matter (kg DM/ha)", value=st.session_state["pred_dm"])
     col_ufl.metric(label="UFL/ha", value=st.session_state["pred_ufl"])
