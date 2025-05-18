@@ -54,13 +54,13 @@ with col1:
 if st.session_state['run_prediction']:
     df_site = df[df["Site"] == site]
 
-    Tmin_min = df_site["Tmin(ºC)"].min()
-    Tmin_max = df_site["Tmin(ºC)"].max()
-    Tmin_mean = df_site["Tmin(ºC)"].mean()
+    Tmin_min = df_site["Tmin(ÂºC)"].min()
+    Tmin_max = df_site["Tmin(ÂºC)"].max()
+    Tmin_mean = df_site["Tmin(ÂºC)"].mean()
 
-    Tmax_min = df_site["Tmax(ºC)"].min()
-    Tmax_max = df_site["Tmax(ºC)"].max()
-    Tmax_mean = df_site["Tmax(ºC)"].mean()
+    Tmax_min = df_site["Tmax(ÂºC)"].min()
+    Tmax_max = df_site["Tmax(ÂºC)"].max()
+    Tmax_mean = df_site["Tmax(ÂºC)"].mean()
 
     prec_min = df_site["Precipitation(mm)"].min()
     prec_max = df_site["Precipitation(mm)"].max()
@@ -111,8 +111,8 @@ if st.session_state['run_prediction']:
         "Elevation(m)": elevation,
         "Radiation(Mj/m2day)": radiation,
         "Precipitation(mm)": precipitation,
-        "Tmax(ºC)": tmax,
-        "Tmin(ºC)": tmin,
+        "Tmax(ÂºC)": tmax,
+        "Tmin(ÂºC)": tmin,
         "WHC(mm)": whc_mean,
         "C(%)": c_mean,
         "pH": ph_mean,
@@ -131,7 +131,7 @@ if st.session_state['run_prediction']:
 
     expected_columns = [
         'Site', 'Cultivar', 'Elevation(m)', 'Radiation(Mj/m2day)', 'Precipitation(mm)',
-        'Tmax(ºC)', 'Tmin(ºC)', 'WHC(mm)', 'C(%)', 'pH',
+        'Tmax(ÂºC)', 'Tmin(ÂºC)', 'WHC(mm)', 'C(%)', 'pH',
         'SowingDate(doy)', 'AnthesisDate(doy)', 'HarvestDate(doy)', 'GrowingSeason(day)']
 
     datapredict = datapredict[expected_columns]
@@ -145,8 +145,8 @@ if st.session_state['run_prediction']:
         st.dataframe(datapredict)
 
     except Exception as e:
-        st.error(f"? Error durante la predicción: {e}")
+        st.error(f"? Error durante la predicciÃ³n: {e}")
         st.stop()
 
-    # Reset para evitar predicción duplicada
+    # Reset para evitar predicciÃ³n duplicada
     st.session_state['run_prediction'] = False
