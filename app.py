@@ -143,11 +143,11 @@ with col1:
     'SowingDate(doy)', 'AnthesisDate(doy)', 'HarvestDate(doy)', 'GrowingSeason(day)']
         datapredict = datapredict[expected_columns]
         
-    try:
-        st.session_state["pred_dm"] = round(model_dm.predict(datapredict)[0], 2)
-        st.session_state["pred_ufl"] = round(model_ufl.predict(datapredict)[0], 2)
-        st.session_state["pred_cp"] = round(model_cp.predict(datapredict)[0], 2)
-    except Exception as e:
-        st.error(f"❌ Error durante la predicción: {e}")
-        st.stop()
+        try:
+            st.session_state["pred_dm"] = round(model_dm.predict(datapredict)[0], 2)
+            st.session_state["pred_ufl"] = round(model_ufl.predict(datapredict)[0], 2)
+            st.session_state["pred_cp"] = round(model_cp.predict(datapredict)[0], 2)
+        except Exception as e:
+            st.error(f"❌ Error durante la predicción: {e}")
+            st.stop()
 
