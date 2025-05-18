@@ -141,7 +141,7 @@ if st.session_state['run_prediction']:
         st.session_state["pred_ufl"] = round(model_ufl.predict(datapredict)[0], 2)
         st.session_state["pred_cp"] = round(model_cp.predict(datapredict)[0], 2)
 
-        st.subheader("?? Input Data for Prediction")
+        st.subheader("📝 Input Data for Prediction")
         st.dataframe(datapredict)
 
     except Exception as e:
