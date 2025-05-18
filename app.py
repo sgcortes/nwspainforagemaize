@@ -33,9 +33,9 @@ col1, col2 = st.columns([1, 2])
 with col2:
     st.image(map_image, caption="Study area: Galicia, Asturias. SPAIN", use_container_width=True)
     col_dm, col_ufl, col_cp = st.columns(3)
-    col_dm.metric(label="Dry Matter (kg DM/ha)", value=st.session_state["pred_dm"])
+    col_dm.metric(label="Dry Matter yield (kg DM/ha)", value=st.session_state["pred_dm"])
     col_ufl.metric(label="UFL/ha", value=st.session_state["pred_ufl"])
-    col_cp.metric(label="Crude Protein (kg CP/ha)", value=st.session_state["pred_cp"])
+    col_cp.metric(label="Crude Protein yield (kg CP/ha)", value=st.session_state["pred_cp"])
 
 with col1:
     st.header("Input Controls")
@@ -139,9 +139,9 @@ if st.session_state['run_prediction']:
     datapredict = datapredict[expected_columns]
 
     try:
-        st.session_state["pred_dm"] = round(model_dm.predict(datapredict)[0], 2)
-        st.session_state["pred_ufl"] = round(model_ufl.predict(datapredict)[0], 2)
-        st.session_state["pred_cp"] = round(model_cp.predict(datapredict)[0], 2)
+        st.session_state["pred_dm"] = round(model_dm.predict(datapredict)[0], 0)
+        st.session_state["pred_ufl"] = round(model_ufl.predict(datapredict)[0], 0)
+        st.session_state["pred_cp"] = round(model_cp.predict(datapredict)[0], 0)
 
         st.subheader("📝 Input Data for Prediction")
         st.dataframe(datapredict)
