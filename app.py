@@ -7,6 +7,13 @@ from PIL import Image
 st.set_page_config(layout="wide")
 st.title("🌽 Forage Maize Prediction in NW of Spain")
 st.markdown("### 🚧 Work in progress")
+
+st.markdown("---")  # Separador visual
+st.markdown(
+    "<small style='display: block; text-align: center;'>📬 Feedback and errors: "
+    "<a href='mailto:sgcortes@uniovi.es'>sgcortes@uniovi.es</a></small>",
+    unsafe_allow_html=True
+)
 # Inicializar session_state
 for key in ["pred_dm", "pred_ufl", "pred_cp", "run_prediction"]:
     if key not in st.session_state:
