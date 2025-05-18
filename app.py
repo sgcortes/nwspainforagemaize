@@ -51,7 +51,7 @@ with col1:
 
     if st.button("Predict"):
         st.session_state['run_prediction'] = True
-
+        st.caption("(First click loads data, second predicts)")
 if st.session_state['run_prediction']:
     df_site = df[df["Site"] == site]
 
