@@ -1,4 +1,4 @@
-# Forage MAize Yield PRediction for NW of Spain
+# Forage Maize Yield Prediction for NW of Spain
 Forage Yield (Dry Matter kg/ha, UFL/ha, Crude Protein kg/ha) in the NW of Spain
 
 
