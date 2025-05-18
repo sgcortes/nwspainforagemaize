@@ -5,7 +5,7 @@ import joblib
 from PIL import Image
 
 st.set_page_config(layout="wide")
-st.title("?? Forage Maize Prediction in NW of Spain")
+st.title("🌽 Forage Maize Prediction in NW of Spain")
 
 # Inicializar session_state
 for key in ["pred_dm", "pred_ufl", "pred_cp", "run_prediction"]:
