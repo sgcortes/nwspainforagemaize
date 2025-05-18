@@ -40,10 +40,10 @@ with col1:
     st.header("Input Controls")
 
     site = st.selectbox("Nearest Site", sorted(df["Site"].unique()))
-    cultivar = st.selectbox("Cultivar", ["A200", "A300", "A400", "G200", "G300", "G400"])
-    sowing_label = st.selectbox("Sowing Date", ["Mid-May", "End-May", "Early June"])
-    harvest_label = st.selectbox("Harvest Date", ["Early-Sept", "Mid-Sept", "Late-Sept"])
-    weather = st.selectbox("Radiation & Weather", ["Good Year", "Average Year", "Bad Year"])
+    cultivar = st.selectbox("🌱Cultivar", ["A200", "A300", "A400", "G200", "G300", "G400"])
+    sowing_label = st.selectbox("📅Sowing Date", ["Mid-May", "End-May", "Early June"])
+    harvest_label = st.selectbox("📅Harvest Date", ["Early-Sept", "Mid-Sept", "Late-Sept"])
+    weather = st.selectbox("☀️Radiation & Weather", ["Good Year", "Average Year", "Bad Year"])
 
     sowing_map = {"Mid-May": 133, "End-May": 151, "Early June": 167}
     harvest_map = {"Early-Sept": 250, "Mid-Sept": 264, "Late-Sept": 287}
