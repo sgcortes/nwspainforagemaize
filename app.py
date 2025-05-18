@@ -142,8 +142,7 @@ with col1:
     'Tmax(ºC)', 'Tmin(ºC)', 'WHC(mm)', 'C(%)', 'pH',
     'SowingDate(doy)', 'AnthesisDate(doy)', 'HarvestDate(doy)', 'GrowingSeason(day)']
         datapredict = datapredict[expected_columns]
-        #st.write("Shape del DataFrame:", datapredict.shape)
-        #st.write("Columnas del DataFrame:", datapredict.columns.tolist())
+        
     try:
         st.session_state["pred_dm"] = round(model_dm.predict(datapredict)[0], 2)
         st.session_state["pred_ufl"] = round(model_ufl.predict(datapredict)[0], 2)
