@@ -159,3 +159,5 @@ st.markdown(
     "<a href='mailto:sgcortes@uniovi.es'>sgcortes@uniovi.es</a></small>",
     unsafe_allow_html=True
 )
+st.markdown('![Contador de visitas](https://shields-io-visitor-counter.herokuapp.com/badge?page=https://share.streamlit.io/tu_usuario/tu_app&label=Visitas&labelColor=000000&color=1D70B8&style=for-the-badge)')
+
